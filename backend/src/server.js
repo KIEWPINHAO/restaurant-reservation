@@ -26,11 +26,23 @@ const PORT = process.env.PORT || 3001;
 // Security middleware
 app.use(helmet());
 
-// CORS configuration
-app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://restaurant-alb-701349099.us-east-1.elb.amazonaws.com',
-  credentials: true
-}));
+// CORS configuration: allow frontend ALB and EC2 IP (explicit list) and handle preflight
+const allowedOrigins = [process.env.FRONTEND_URL, 'http://restaurant-alb-701349099.us-east-1.elb.amazonaws.com', 'http://98.92.153.155'].filter(Boolean);
+const corsOptions = {
+  origin: (origin, callback) => {
+    // Allow requests with no origin (e.g., mobile apps, curl)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    return callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true,
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
+// Ensure preflight OPTIONS requests are handled for all routes
+app.options('*', cors(corsOptions));
 
 // Rate limiting to prevent abuse
 const limiter = rateLimit({
