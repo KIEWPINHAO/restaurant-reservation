@@ -1,7 +1,7 @@
 import type { User, Booking, MenuItem, ApiResponse, BookingStatus } from '@/types';
 
 // API Base URL - Change this when deploying to cloud
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://restaurant-alb-701349099.us-east-1.elb.amazonaws.com/api';
 
 // Helper function to get auth token
 function getAuthToken(): string | null {
