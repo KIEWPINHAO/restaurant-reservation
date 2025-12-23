@@ -28,7 +28,7 @@ app.use(helmet());
 
 // CORS configuration
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: process.env.FRONTEND_URL || 'http://restaurant-alb-701349099.us-east-1.elb.amazonaws.com',
   credentials: true
 }));
 
