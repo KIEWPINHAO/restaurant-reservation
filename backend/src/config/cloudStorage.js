@@ -36,7 +36,7 @@ export async function uploadMenuImage(fileBuffer, fileName, mimeType) {
       Body: fileBuffer,
       ContentType: mimeType,
       // ACL configuration - coordinate with Security Lead (Role 3)
-      ACL: 'public-read',
+      //ACL: 'public-read',
       // Add metadata
       Metadata: {
         'uploaded-at': new Date().toISOString(),

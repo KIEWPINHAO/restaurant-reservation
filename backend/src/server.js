@@ -58,7 +58,8 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Request logging middleware
 app.use((req, res, next) => {
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+  const origin = req.headers.origin || req.headers.Origin || 'no-origin';
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.path} - Origin: ${origin}`);
   next();
 });
 

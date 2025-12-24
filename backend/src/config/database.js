@@ -21,7 +21,7 @@ const pool = mysql.createPool({
   connectTimeout: 10000,
   // Handle connection loss and retry
   ssl: process.env.NODE_ENV === 'production' ? {
-    rejectUnauthorized: true
+    rejectUnauthorized: false
   } : undefined
 });
 
